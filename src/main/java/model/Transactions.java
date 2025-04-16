@@ -2,7 +2,7 @@ package model;
 
 public class Transactions
 {
-    private String type; // "Income" or "Expense"
+    private String type;
     private String description;
     private double amount;
 

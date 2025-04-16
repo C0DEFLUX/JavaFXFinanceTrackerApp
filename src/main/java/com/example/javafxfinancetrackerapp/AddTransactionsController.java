@@ -40,9 +40,9 @@ public class AddTransactionsController {
             //Make it a double
             double amount = Double.parseDouble(amountText);
 
-            //Pass the values to the Object
+            //Pass the values to the list
             Transactions transaction = new Transactions(type, description, amount);
-            //Add the values to the object
+            //Add the values to the transaction list
             TransactionStore.addTransaction(transaction);
 
             showAlert("Transaction added!");

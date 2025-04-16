@@ -11,14 +11,19 @@ import java.net.URL;
 
 public class SceneSwitcher
 {
-    public static void switchScene(Node node, String fxmlFile, String title) throws IOException {
+    public static void switchScene(Node node, String fxmlFile, String title) throws IOException
+    {
+        //Set the path and the url
         String path = "/com/example/javafxfinancetrackerapp/" + fxmlFile;
         URL fxmlPath = SceneSwitcher.class.getResource(path);
 
-        if (fxmlPath == null) {
+        //Check if fxml exists
+        if (fxmlPath == null)
+        {
             throw new IOException("FXML file not found: " + path);
         }
 
+        //Set the scene
         Parent root = FXMLLoader.load(fxmlPath);
         Stage stage = (Stage) node.getScene().getWindow();
         stage.setScene(new Scene(root));
