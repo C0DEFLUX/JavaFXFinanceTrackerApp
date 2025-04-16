@@ -4,7 +4,7 @@ A desktop application built with **JavaFX** that helps users track their persona
 
 ---
 
-## Features
+## ✨ Features
 
 - Login screen for basic access
 - Dashboard overview with total income & expenses
@@ -50,7 +50,7 @@ A desktop application built with **JavaFX** that helps users track their persona
    
 3.Run the app!
 
-## In app Login
+### In-app Login
 
 ```bash
 username: admin
