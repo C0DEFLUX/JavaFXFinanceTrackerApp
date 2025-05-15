@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafxfinancetrackerapp.LoginController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafxfinancetrackerapp.RegisterController">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #5878e1;">
          <children>
@@ -27,7 +27,7 @@
       </AnchorPane>
       <VBox alignment="CENTER" layoutX="300.0" prefHeight="400.0" prefWidth="300.0">
          <children>
-            <TextField fx:id="usernameField" promptText="Username">
+            <TextField fx:id="usernameRegField" promptText="Username">
                <padding>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </padding>
@@ -35,20 +35,21 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </TextField>
-            <PasswordField fx:id="passwordField" promptText="Password">
+            <PasswordField fx:id="passwordRegField" promptText="Password">
                <padding>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </padding>
             </PasswordField>
-            <Button mnemonicParsing="false" onAction="#handleLogin" style="-fx-background-color: #5878e1;" text="LOGIN" textFill="#f9fafc">
+            <Label />
+            <Button mnemonicParsing="false" onAction="#register" style="-fx-background-color: #5878e1;" text="REGISTER" textFill="#f9fafc">
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets />
                </VBox.margin>
                <padding>
                   <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
                </padding>
             </Button>
-            <Button onAction="#showRegisterView" mnemonicParsing="false" style="-fx-background-color: gray;" text="Don't have an account?" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#showLoginView" style="-fx-background-color: gray;" text="Already have an account?" textFill="WHITE">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
