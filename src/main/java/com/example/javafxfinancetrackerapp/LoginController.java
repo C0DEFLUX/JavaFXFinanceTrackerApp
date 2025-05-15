@@ -7,9 +7,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import utils.DBUtil;
 import utils.SceneSwitcher;
+import utils.Session;
 
 import java.io.IOException;
 import java.sql.*;
+
+import static utils.Alerts.showAlert;
 
 public class LoginController
 {
@@ -39,6 +42,11 @@ public class LoginController
                 return false;
             }
 
+            //Save user data into a session
+            int userId = rs.getInt("id");
+            String username = rs.getString("username");
+            Session.login(userId, username);
+
             try
             {
                 SceneSwitcher.switchScene(
@@ -61,14 +69,6 @@ public class LoginController
             e.printStackTrace();
             return false;
         }
-
-//        if ("admin".equals(usernameField.getText()) && "admin".equals(passwordField.getText()))
-//        {
-//            SceneSwitcher.switchScene((javafx.scene.Node) event.getSource(), "dashboard-view.fxml", "Dashboard");
-//        } else
-//        {
-//            showAlert("Invalid username or password");
-//        }
     }
 
     public void showRegisterView(ActionEvent event)
@@ -89,10 +89,5 @@ public class LoginController
     }
 
 
-    private void showAlert(String msg)
-    {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
+
 }

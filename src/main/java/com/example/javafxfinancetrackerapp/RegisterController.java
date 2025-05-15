@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import static utils.Alerts.showAlert;
+
 public class RegisterController
 {
     @FXML
@@ -62,13 +64,6 @@ public class RegisterController
             e.printStackTrace();
             showAlert("Failed to switch scene.");
         }
-    }
-
-    private void showAlert(String msg)
-    {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 
 }

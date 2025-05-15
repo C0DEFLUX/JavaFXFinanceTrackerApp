@@ -25,6 +25,7 @@ public class DashboardController {
         double totalIncome = 0;
         double totalExpenses = 0;
 
+
         //Loop to calculate the total income and expenses by checking the transition type
         for (Transactions t : TransactionStore.getTransactions())
         {

@@ -12,6 +12,8 @@ import utils.SelectedTransaction;
 
 import java.io.IOException;
 
+import static utils.Alerts.showAlert;
+
 public class EditTransactionsController {
 
     @FXML private TextField editAmountField;
@@ -86,12 +88,6 @@ public class EditTransactionsController {
     }
 
 
-    private void showAlert(String msg)
-    {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
 
     public void handleBack(ActionEvent event) throws IOException
     {

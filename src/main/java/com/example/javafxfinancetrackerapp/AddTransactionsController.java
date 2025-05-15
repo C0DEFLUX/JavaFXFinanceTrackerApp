@@ -9,6 +9,8 @@ import utils.TransactionStore;
 
 import java.io.IOException;
 
+import static utils.Alerts.showAlert;
+
 public class AddTransactionsController {
 
     @FXML private ComboBox<String> typeBox;
@@ -56,13 +58,6 @@ public class AddTransactionsController {
         {
             showAlert("Invalid amount entered.");
         }
-    }
-
-    private void showAlert(String msg)
-    {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 
     public void handleBack(ActionEvent event) throws IOException
