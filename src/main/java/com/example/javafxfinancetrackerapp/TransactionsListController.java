@@ -7,74 +7,119 @@ import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Transactions;
-import javafx.scene.control.TableView;
+import utils.DBUtil;
 import utils.SceneSwitcher;
 import utils.SelectedTransaction;
-import utils.TransactionStore;
+import utils.Session;
 
 import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static utils.Alerts.showAlert;
 
 public class TransactionsListController {
 
-    @FXML
-    private Button editBtn;
-    @FXML
-    private Button deleteBtn;
-    @FXML
-    private TableView<Transactions> transactionsTable;
-    @FXML
-    private TableColumn<Transactions, String> typeColumn;
-    @FXML
-    private TableColumn<Transactions, String> descColumn;
-    @FXML
-    private TableColumn<Transactions, Double> amountColumn;
+    @FXML private Button editBtn;
+    @FXML private Button deleteBtn;
+    @FXML private TableView<Transactions> transactionsTable;
+    @FXML private TableColumn<Transactions, String> typeColumn;
+    @FXML private TableColumn<Transactions, String> descColumn;
+    @FXML private TableColumn<Transactions, Double> amountColumn;
+
+    private ObservableList<Transactions> transactionList;
 
     @FXML
-    public void initialize() {
-
-        //Connect values to tabled columns
+    public void initialize()
+    {
+        //Set up table columns
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         descColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
-        transactionsTable.setItems(FXCollections.observableArrayList(TransactionStore.getTransactions()));
+        //Load data from DB
+        transactionList = FXCollections.observableArrayList(getTransactionsFromDB());
+        transactionsTable.setItems(transactionList);
 
-        editBtn.setOnAction(event -> {
-            //Get selected table row
+        // Edit button logic
+        editBtn.setOnAction(event ->
+        {
             Transactions selected = transactionsTable.getSelectionModel().getSelectedItem();
-
             if (selected != null)
             {
-                //Store the single transaction selection
                 SelectedTransaction.setTransaction(selected);
                 try
                 {
-                    //Switch scene
                     SceneSwitcher.switchScene(
                             (javafx.scene.Node) event.getSource(),
                             "transaction-edit-view.fxml",
-                            String.valueOf(transactionsTable.getScene())
+                            "Edit Transaction"
                     );
-
                 } catch (IOException e)
                 {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         });
 
+        // Delete button logic
         deleteBtn.setOnAction(event ->
         {
-            //Get the selected table
-            Transactions transaction = transactionsTable.getSelectionModel().getSelectedItem();
-
-            if (transaction != null)
+            Transactions selected = transactionsTable.getSelectionModel().getSelectedItem();
+            if (selected != null)
             {
-                TransactionStore.getTransactions().remove(transaction);
-
-                transactionsTable.setItems(FXCollections.observableArrayList(TransactionStore.getTransactions()));
+                deleteTransactionFromDB(selected.getId());
+                transactionList.remove(selected);
             }
         });
+    }
+
+    private List<Transactions> getTransactionsFromDB()
+    {
+        List<Transactions> list = new ArrayList<>();
+        String sql = "SELECT * FROM transactions WHERE user_id = ?";
+
+        try (Connection conn = DBUtil.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql))
+        {
+
+            stmt.setInt(1, Session.getUserId());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                Transactions t = new Transactions(
+                        rs.getInt("id"),
+                        rs.getString("type"),
+                        rs.getString("description"),
+                        rs.getDouble("amount")
+                );
+                list.add(t);
+            }
+
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    private void deleteTransactionFromDB(int id)
+    {
+        String sql = "DELETE FROM transactions WHERE id = ?";
+
+        try (Connection conn = DBUtil.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql))
+        {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+           showAlert("Failed to Delete");
+        }
     }
 
     public void handleBack(ActionEvent event) throws IOException

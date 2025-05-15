@@ -39,4 +39,8 @@ public class Transactions
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+    public int getId() {
+        return id;
+    }
 }
