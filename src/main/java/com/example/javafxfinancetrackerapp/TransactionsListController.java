@@ -75,9 +75,11 @@ public class TransactionsListController {
         });
     }
 
+    //Method for setting the rows in the table from DB
     private List<Transactions> getTransactionsFromDB()
     {
         List<Transactions> list = new ArrayList<>();
+        //Sql query
         String sql = "SELECT * FROM transactions WHERE user_id = ?";
 
         try (Connection conn = DBUtil.connect();
@@ -87,6 +89,7 @@ public class TransactionsListController {
             stmt.setInt(1, Session.getUserId());
             ResultSet rs = stmt.executeQuery();
 
+            //Add each row to list and the return it
             while (rs.next())
             {
                 Transactions t = new Transactions(
@@ -106,8 +109,10 @@ public class TransactionsListController {
         return list;
     }
 
+    //Method for deleting transactions
     private void deleteTransactionFromDB(int id)
     {
+        //Sql query
         String sql = "DELETE FROM transactions WHERE id = ?";
 
         try (Connection conn = DBUtil.connect();

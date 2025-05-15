@@ -42,6 +42,7 @@ public class EditTransactionsController {
 
     private void handleSaveEdit(ActionEvent event)
     {
+        //Check if there is a transaction
         if (transaction == null)
         {
             showAlert("No transaction selected.");
@@ -54,16 +55,19 @@ public class EditTransactionsController {
             String description = editDescField.getText();
             String type = typeBox.getValue();
 
+            //Validate for empty fields
             if (description.isEmpty() || type == null || amount < 0)
             {
                 showAlert("Please fill out all fields correctly.");
                 return;
             }
 
+            //Sql query
             String sql = "UPDATE transactions SET type = ?, description = ?, amount = ? WHERE id = ?";
 
             try (Connection conn = DBUtil.connect();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                 PreparedStatement stmt = conn.prepareStatement(sql))
+            {
 
                 stmt.setString(1, type);
                 stmt.setString(2, description);
@@ -74,18 +78,20 @@ public class EditTransactionsController {
 
                 showAlert("Transaction updated successfully!");
 
+                //Update object
                 transaction.setAmount(amount);
                 transaction.setDescription(description);
                 transaction.setType(type);
 
-                //Go back to dashboard
+                //Return to dashboard
                 SceneSwitcher.switchScene(
                         (javafx.scene.Node) event.getSource(),
                         "dashboard-view.fxml",
                         "Dashboard"
                 );
 
-            } catch (SQLException e) {
+            } catch (SQLException e)
+            {
                 showAlert("Failed to edit transaction.");
             }
 
