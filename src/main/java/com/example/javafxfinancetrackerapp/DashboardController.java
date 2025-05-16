@@ -81,15 +81,18 @@ public class DashboardController
         return transactions;
     }
 
-    public void handleAddTransaction(ActionEvent event) throws IOException {
+    public void handleAddTransaction(ActionEvent event) throws IOException
+    {
         SceneSwitcher.switchScene((javafx.scene.Node) event.getSource(), "transaction-add-view.fxml", "Add Transaction");
     }
 
-    public void handleViewTransactions(ActionEvent event) throws IOException {
+    public void handleViewTransactions(ActionEvent event) throws IOException
+    {
         SceneSwitcher.switchScene((javafx.scene.Node) event.getSource(), "transaction-list-view.fxml", "Transactions");
     }
 
-    public void handleLogout(ActionEvent event) throws IOException {
+    public void handleLogout(ActionEvent event) throws IOException
+    {
         SceneSwitcher.switchScene((javafx.scene.Node) event.getSource(), "login-view.fxml", "Login");
     }
 }

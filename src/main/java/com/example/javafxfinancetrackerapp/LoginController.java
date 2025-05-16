@@ -52,7 +52,7 @@ public class LoginController
                 SceneSwitcher.switchScene(
                         (javafx.scene.Node) event.getSource(),
                         "dashboard-view.fxml",
-                        "Dashboard"
+                        "Welcome "+ username
                 );
 
 
