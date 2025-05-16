@@ -43,6 +43,20 @@ public class RegisterController
             stmt.setString(2, passwordRegField.getText());
             stmt.executeUpdate();
 
+            try
+            {
+                SceneSwitcher.switchScene(
+                        (javafx.scene.Node) event.getSource(),
+                        "login-view.fxml",
+                        "Finance Tracker - Login"
+                );
+
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+                showAlert("Failed to switch scene.");
+            }
+
         } catch (SQLException e)
         {
             e.printStackTrace();
