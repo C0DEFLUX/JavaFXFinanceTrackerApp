@@ -6,6 +6,7 @@ A desktop application built with **JavaFX** that helps users track their persona
 
 ## ✨ Features
 
+- Register screen for new users
 - Login screen for basic access
 - Dashboard overview with total income & expenses
 - Add new transactions (income or expense)
@@ -21,8 +22,8 @@ A desktop application built with **JavaFX** that helps users track their persona
 - Java 17+
 - JavaFX 20+
 - FXML (SceneBuilder for layout)
-- Java Collections (for in-memory data storage)
 - MVC pattern
+- MySQL
 
 ---
 
@@ -34,6 +35,7 @@ A desktop application built with **JavaFX** that helps users track their persona
 - JavaFX SDK 20+
 - Any IDE (IntelliJ IDEA, Eclipse, or VSCode with JavaFX plugin)
 - SceneBuilder (optional but recommended for editing FXML)
+- MySQL server
 
 ### Running the App
 
@@ -47,14 +49,32 @@ A desktop application built with **JavaFX** that helps users track their persona
    JavaFX libraries are properly linked.
    VM options are set (e.g., --module-path /path/to/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml if running from terminal).
    You're using Main.java as your entry point.
+
+
+3. Open **utils** folder, then in the file **DBUtils** change the MySQL credentials from your MySQL server credentials.
+   ```java
+      package utils;
+      
+      import java.sql.Connection;
+      import java.sql.DriverManager;
+      import java.sql.SQLException;
+      
+      public class DBUtil
+      {
+      //Change to your host
+      private static final String URL = "jdbc:mysql:your-host/finance_schema";
+      private static final String USER = "your-user";
+      private static final String PASSWORD = "your-password";
+      
+          public static Connection connect() throws SQLException
+          {
+              return DriverManager.getConnection(URL, USER, PASSWORD);
+          }
+      }
+   ```
+   After that import the SQL file for the tables.
    
 3.Run the app!
 
-### In-app Login
-
-```bash
-username: admin
-password: admin
-```
 
 
